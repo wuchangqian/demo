@@ -34,6 +34,9 @@
         <!-- 实现免登陆验证 -->
         <remember-me />
 
+        <!-- 使用自定义的过滤器 -->
+        <custom-filter ref="mySecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+
     </http>
 
     <!-- 登录入口 -->
@@ -63,10 +66,17 @@
             <!-- <password-encoder ref="bcryptEncoder" /> -->
         </authentication-provider>
     </authentication-manager>
-
-    <!-- 自定义的权限查询服务 -->
-    <beans:bean name="myUserDetailsService" class="com.chencye.security.support.MyUserDetailsService" />
-
     <beans:bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+    <beans:bean id="mySecurityFilter" class="com.chencye.security.support.MySecurityFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+        <beans:property name="securityMetadataSource" ref="mySecurityMetadataSource" />
+    </beans:bean>
+
+    <!-- 核心验证类 -->
+    <!-- 如果使用SPRING注解方式，则可直接注释掉 -->
+    <beans:bean name="myUserDetailsService" class="com.chencye.security.support.MyUserDetailsService" />
+    <beans:bean id="myAccessDecisionManager" class="com.chencye.security.support.MyAccessDecisionManager" />
+    <beans:bean id="mySecurityMetadataSource" init-method="init" class="com.chencye.security.support.MySecurityMetadataSource" />
 </beans:beans>
