@@ -32,7 +32,7 @@
         <custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
 
         <!-- 实现免登陆验证 -->
-        <remember-me />
+        <!-- <remember-me /> -->
 
         <!-- 使用自定义的过滤器 -->
         <custom-filter ref="mySecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
