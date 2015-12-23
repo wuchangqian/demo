@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LogbackController {
@@ -11,15 +12,17 @@ public class LogbackController {
     private final static Logger log = LoggerFactory.getLogger(LogbackController.class);
     
     @RequestMapping("logback")
-    public String testLogback() {
-        for (int i = 0; i < 1000; i++) {
+    public ModelAndView testLogback() {
+        
+        for (int i = 0; i < 20000; i++) {
             log.debug("[debug] testLogback.");
-            log.info("[info] testLogback.");
-            log.warn("[warn] testLogback.");
-            log.error("[error] testLogback.");
+            log.info("[info] testLogback." + i);
+            log.warn("[warn] testLogback." + i);
+            log.error("[error] testLogback." + i);
         }
-        System.out.println("--------test----------");
-        log.info("[end] testLogback.");
-        return "index";
+        
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+        return mv;
     }
 }
