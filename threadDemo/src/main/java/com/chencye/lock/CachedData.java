@@ -3,7 +3,7 @@ package com.chencye.lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * 下面的代码展示了如何利用重入来执行升级缓存后的锁降级（为简单起见，省略了异常处理）
+ * 展示了如何利用重入来执行升级缓存后的锁降级（为简单起见，省略了异常处理）
  * 
  */
 public class CachedData
