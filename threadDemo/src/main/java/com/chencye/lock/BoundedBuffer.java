@@ -5,7 +5,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * （ArrayBlockingQueue 类提供了这项功能，因此没有理由去实现这个示例类。）
+ * <pre>
+ * 线程安全的缓冲队列
+ * <b>（ArrayBlockingQueue 类提供了这项功能，因此没有理由去实现这个示例类。）</b>
+ * </pre>
  * 
  */
 public class BoundedBuffer
