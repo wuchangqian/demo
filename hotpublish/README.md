@@ -2,6 +2,11 @@
 [http://blog.csdn.net/chwshuang/article/details/48499231](http://blog.csdn.net/chwshuang/article/details/48499231)
 
 ### 执行命令
+### debug模式运行tomcat插件
+`clean compile tomcat:run -Pdevelopment`
+**设置关联源码**
+项目右键 --> Debug As --> Debug Configurations --> Source --> Add --> Java Project --> 选中当前项目
+再以Debug As -->Maven build中的tomcat:run命令运行，如此断点debug后，才能关联到源码
 #### 打包研发环境
 `clean package -Pdevelopment`
 #### 部署研发环境
@@ -10,33 +15,6 @@
 `clean package -Ptest`
 #### 部署测试环境
 `clean package cargo:redeploy -Ptest`
-
-### Maven pom.xml文件【Run As】自定义指令运行配置
- **说明：**
-Name: 显示名称
-Base directory:  项目绝对地址目录
-Goals: maven执行指令 指令中的-D表示参数，如果是研发环境就是dev，测试就是test
-Skip Tests  表示选中跳过测试
-**1. 研发环境打包指令**
-Name: hotpublish-dev-package
-Base directory: D:/git/chencye/demo/hotpublish
-Goals: clean package -Pdevelopment
-Skip Tests
-**2. 研发环境部署指令**
-Name: hotpublish-dev-deploy
-Base directory: D:/git/chencye/demo/hotpublish
-Goals: cargo:redeploy -Pdevelopment
-Skip Tests
-**3. 测试环境打包指令**
-Name: hotpublish-test-package
-Base directory: D:/git/chencye/demo/hotpublish
-Goals: clean package -Ptest
-Skip Tests
-**4. 测试环境部署指令**
-Name: hotpublish-test-deploy
-Base directory: D:/git/chencye/demo/hotpublish
-Goals: cargo:redeploy -Ptest
-Skip Tests
 
 ### Tomcat自动部署支持
 需要在Tomcat配置目录conf下的tomcat-users.xml配置tomcat用户的角色和权限，下面的配置为我们tomcat-username这个用户配置了管理权限，可以向tomcat部署应用

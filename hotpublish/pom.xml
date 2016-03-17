@@ -5,7 +5,35 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <repositories>
+        <repository>
+            <id>oschina</id>
+            <name>oschina</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>oschina</id>
+            <name>oschina</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <properties>
+        <project.build.encoding>UTF-8</project.build.encoding>
         <spring.version>3.2.13.RELEASE</spring.version>
     </properties>
 
@@ -138,7 +166,7 @@
         </resources>
 
         <plugins>
-            <!-- 编译 -->
+            <!-- mvn compile -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -149,14 +177,39 @@
                 </configuration>
             </plugin>
 
-            <!-- 打包 -->
+            <!-- 跳过单元测试，若skip设置为false，则需要进行单元测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!-- mvn package -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
 
-            <!-- 自动部署 -->
+            <!-- mvn tomcat:run -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8080/manager/text</url>
+                    <httpPort>8080</httpPort>
+                    <uriEncoding>${project.build.encoding}</uriEncoding>
+                    <useBodyEncodingForURI>true</useBodyEncodingForURI>
+                    <warFile>${project.build.directory}/${project.build.finalName}.war</warFile>
+                    <warDirectory>${project.build.directory}/${project.build.finalName}</warDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- mvn cargo:redeploy -->
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
