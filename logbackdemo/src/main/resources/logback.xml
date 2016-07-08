@@ -45,10 +45,10 @@
         <appender-ref ref="rollingFile" />
     </logger>
 
-    <logger name="org.springframework" level="warn" />
+    <logger name="org.springframework" level="debug" />
     <logger name="ch.qos.logback" level="warn" />
 
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="console" />
     </root>
 
