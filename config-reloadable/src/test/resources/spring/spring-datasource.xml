@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--
+    # 没有对应config.decrypt的属性读取，不能对密码进行加解密
+    # 若要实现加密，需对读取的properties进行处理，再传入DruidDataSourceFactory，需要二次登录时，可使用此方式
+    <util:properties id="druidProperties" location="classpath*:druid.properties"/>
+    <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSourceFactory" factory-method="createDataSource"
+          lazy-init="true">
+        <constructor-arg ref="druidProperties"/>
+    </bean>
+    -->
+
+    <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close" lazy-init="true">
+        <!-- 使用此种配置文件的形式，就不能在配置文件再配置filters了，会报错 -->
+        <!-- 此种方式，是使用ConfigFilter来记取配置文件，再更新到DruidDataSource中的 -->
+        <property name="filters" value="config"/>
+        <property name="connectionProperties" value="config.file=classpath:druid.properties"/>
+    </bean>
+
+</beans>
