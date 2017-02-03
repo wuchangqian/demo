@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <jee:jndi-lookup id="chencyedb" jndi-name="chencyedb" lazy-init="true" />
+    <jee:jndi-lookup id="chencyedb2" jndi-name="chencyedb2" lazy-init="true" />
+
+    <bean id="multipleDataSource" class="com.chencye.demo.system.datasource.MultipleDataSource" lazy-init="true">
+        <property name="defaultTargetDataSource" ref="chencyedb" />
+        <property name="targetDataSources">
+            <map>
+                <!-- 注意这里的value是和上面的DataSource的id对应，key要与枚举com.github.chencye.demo.datasource.support.DataSource对应 -->
+                <entry value-ref="chencyedb" key="chencyedb" />
+                <entry value-ref="chencyedb2" key="chencyedb2" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="multipleDataSource" />
+    </bean>
+
+</beans>

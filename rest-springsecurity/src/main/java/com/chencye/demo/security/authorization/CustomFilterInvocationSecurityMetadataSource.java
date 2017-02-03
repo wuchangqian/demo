@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -45,9 +46,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
             }
         }
         
-        Collection<ConfigAttribute> configAttributes = new ArrayList<>();
-        configAttributes.add(new SecurityConfig("unconfig"));
-        return configAttributes;
+        throw new AccessDeniedException("403:unconfig");
     }
     
     public boolean supports(Class<?> clazz) {

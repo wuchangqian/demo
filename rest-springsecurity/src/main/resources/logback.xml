@@ -46,9 +46,9 @@
     </logger>
 
     <logger name="org.springframework" level="warn" />
-    <logger name="ch.qos.logback" level="warn" />
+    <logger name="ch.qos.logback" level="WARN" addtivity="false" />
 
-    <root level="debug">
+    <root level="WARN">
         <appender-ref ref="console" />
     </root>
 
