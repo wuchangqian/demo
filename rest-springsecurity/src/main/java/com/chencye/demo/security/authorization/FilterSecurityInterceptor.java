@@ -6,37 +6,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomFilterSecurityInterceptor extends FilterSecurityInterceptor {
+public class FilterSecurityInterceptor extends org.springframework.security.web.access.intercept.FilterSecurityInterceptor {
     
     @Autowired
-    private CustomAccessDecisionManager customAccessDecisionManager;
+    private AccessDecisionManager accessDecisionManager;
     
     @Autowired
-    private CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
+    private FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource;
     
     @PostConstruct
     public void init() {
-        super.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
-        super.setAccessDecisionManager(customAccessDecisionManager);
+        super.setSecurityMetadataSource(filterInvocationSecurityMetadataSource);
+        super.setAccessDecisionManager(accessDecisionManager);
     }
     
     @Override
     public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
-        return customFilterInvocationSecurityMetadataSource;
+        return filterInvocationSecurityMetadataSource;
     }
     
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
-        return customFilterInvocationSecurityMetadataSource;
+        return filterInvocationSecurityMetadataSource;
     }
     
     @Override
     public AccessDecisionManager getAccessDecisionManager() {
-        return customAccessDecisionManager;
+        return accessDecisionManager;
     }
     
 }

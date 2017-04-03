@@ -13,10 +13,10 @@ import com.chencye.demo.commons.utils.ServletUtils;
 import com.chencye.demo.conf.RetCode;
 
 @Component
-public class LogoutSuccessHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {
+public class AuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler {
     
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException,
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException,
             ServletException {
         ServletUtils.write(response, RetCode.SUCCESS);
     }

@@ -2,7 +2,6 @@ package com.chencye.demo.security.authorization;
 
 import java.util.Collection;
 
-import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -11,11 +10,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomAccessDecisionManager implements AccessDecisionManager {
+public class AccessDecisionManager implements org.springframework.security.access.AccessDecisionManager {
     
-    private final String ACCESS_ALL = "0";
-    private final String FORBIT_ALL = "1";
-    private final String SUPPER = "2";
+    private final static String ACCESS_ALL = "0";
+    private final static String FORBIT_ALL = "1";
+    private final static String SUPPER = "2";
     
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)

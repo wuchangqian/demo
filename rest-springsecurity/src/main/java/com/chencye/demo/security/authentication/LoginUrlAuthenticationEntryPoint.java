@@ -1,6 +1,5 @@
 package com.chencye.demo.security.authentication;
 
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 /**
  * <pre>
@@ -10,9 +9,9 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
  * @author chencye
  *
  */
-public class CustomLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
+public class LoginUrlAuthenticationEntryPoint extends org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint {
     
-    public CustomLoginUrlAuthenticationEntryPoint(String loginFormUrl) {
+    public LoginUrlAuthenticationEntryPoint(String loginFormUrl) {
         super(loginFormUrl);
         super.setUseForward(true);
     }
