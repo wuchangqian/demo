@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <script src="dateutil.js"></script>
+    <script src="echarts.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main"
+     style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; width: 80%; height:80%;"></div>
+
+<script type="text/javascript">
+
+    var dates = [];
+    var datas = [];
+    var date = new Date();
+    dates.push(date.format("yyyy-MM-dd hh:mm"));
+    datas.push(0);
+    for (var i = 1, j = 288; i < j; i++) {
+        date = date.add(date.interval.MINUTE, -5);
+        dates.push(date.format("yyyy-MM-dd hh:mm"));
+        datas.push(Math.random() * 1000);
+    }
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        toolbox: {
+            feature: {
+                magicType: {
+                    type: ['line', 'bar']
+                },
+                dataView: {readOnly: true},
+                saveAsImage: {},
+                restore: {}
+            }
+        },
+        xAxis: {
+            name: '时间',
+            data: dates
+        },
+        yAxis: {
+            name: '值'
+        },
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: datas
+        }],
+        dataZoom: [{
+            type: 'slider',
+            xAxisIndex: [0],
+            start: 80,
+            end: 100,
+            showDataShadow: false
+        }, {
+            type: 'inside',
+            xAxisIndex: [0]
+        }]
+    };
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>
