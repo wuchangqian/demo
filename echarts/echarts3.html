@@ -12,39 +12,10 @@
      style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; width: 80%; height:80%;"></div>
 
 <script type="text/javascript">
-
-    var data = {};
-    var date = new Date();
-    var dateStr = date.format('yyyy-MM-dd hh:mm');
-    data[dateStr] = 0;
-    for (var i = 1, j = 288; i < j; i++) {
-        date = date.add(date.interval.MINUTE, -5);
-        dateStr = date.format('yyyy-MM-dd hh:mm');
-        data[dateStr] = Math.random() * 1000;
-    }
-
-    var size = 0;
-    var sum = 0;
-    for (var key in data) {
-        size++;
-        sum += data[key];
-    }
-    var avg = sum / size;
-
-    var datas = [];
-    for (var key in data) {
-        var item = {};
-        item.name = key;
-        var value = data[key];
-        item.value = [key, value];
-        if (value > avg && ( value - avg ) / avg > 0.7) {
-            item.itemStyle = {};
-            item.itemStyle.normal = {};
-            item.itemStyle.normal.color = 'blue';
-        }
-        datas.push(item);
-    }
-
+    initDatas();
+    console.log(xAxisData);
+    console.log(yAxisData);
+    console.log(yAxisData1);
     // 指定图表的配置项和数据
     var option = {
         title: {
@@ -52,7 +23,7 @@
         },
         tooltip: {},
         legend: {
-            data: ['销量']
+            data: ['销量', '比例']
         },
         toolbox: {
             feature: {
@@ -66,24 +37,30 @@
         },
         xAxis: {
             name: '时间',
-            type: 'time',
+            type: 'category',
+            data: xAxisData,
             splitLine: {
                 show: false
             }
         },
         yAxis: [{
             type: 'value',
-            scale: true,
             name: '值'
         }, {
             type: 'value',
-            scale: true,
             name: '比例'
         }],
         series: [{
             name: '销量',
             type: 'bar',
-            data: datas
+            showSymbol: false,
+            data: yAxisData
+        }, {
+            name: '比例',
+            type: 'line',
+            yAxisIndex: 1,
+            showSymbol: false,
+            data: yAxisData1
         }],
         dataZoom: [{
             type: 'slider',
@@ -102,6 +79,53 @@
     var myChart = echarts.init(document.getElementById('main'));
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+
+    /*    setInterval(function () {
+     var datas = getDatas();
+     myChart.setOption({
+     series: [{
+     data: datas
+     }]
+     });
+     }, 1000);*/
+
+    var xAxisData = [];
+    var yAxisData = [];
+    var yAxisData1 = [];
+
+    function initDatas() {
+        var data = [];
+        var date = new Date();
+        var curDate = date;
+        var dateStr = date.format('yyyy-MM-dd hh:mm');
+        var item = {};
+        item.time = dateStr;
+        item.value1 = 0;
+        item.value2 = 0;
+        data.push(item)
+        for (var i = 1, j = 288; i < j; i++) {
+            date = date.add(date.interval.MINUTE, -5);
+            dateStr = date.format('yyyy-MM-dd hh:mm');
+            var item = {};
+            item.time = dateStr;
+            item.value1 = Math.random() * 1000;
+            item.value2 = Math.random();
+            data.push(item)
+        }
+        console.log(data);
+
+        xAxisData = [];
+        yAxisData = [];
+        yAxisData1 = [];
+        for (var i in data) {
+            var theItem = data[i];
+            xAxisData.push(theItem.time);
+            yAxisData.push(theItem.value1);
+            yAxisData1.push(theItem.value2);
+        }
+        //console.log(yAxisData);
+
+    }
 
 </script>
 </body>
